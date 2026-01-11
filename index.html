@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AWS Choice Helper</title>
+</head>
+<body>
+  <h2>AWS Lambda vs EC2</h2>
+
+  <label>Traffic level:</label>
+  <select id="traffic">
+    <option>Low</option>
+    <option>High</option>
+  </select>
+
+  <br><br>
+
+  <label>Want low server management?</label>
+  <select id="ops">
+    <option>Yes</option>
+    <option>No</option>
+  </select>
+
+  <br><br>
+
+  <label>Very cost sensitive?</label>
+  <select id="cost">
+    <option>Yes</option>
+    <option>No</option>
+  </select>
+
+  <br><br>
+
+  <button onclick="decide()">Decide</button>
+
+  <pre id="result"></pre>
+
+  <script src="script.js"></script>
+</body>
+</html>
