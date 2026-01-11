@@ -1,39 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>AWS Choice Helper</title>
+  <meta charset="UTF-8" />
+  <title>AWS Service Decision Helper</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 40px auto;
+      line-height: 1.6;
+    }
+    select, button {
+      padding: 8px;
+      margin-top: 5px;
+      width: 100%;
+    }
+    .box {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-top: 20px;
+      white-space: pre-line;
+    }
+    button {
+      background-color: #ff9900;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
 </head>
+
 <body>
-  <h2>AWS Lambda vs EC2</h2>
 
-  <label>Traffic level:</label>
+  <h1>AWS Lambda vs EC2 – Decision Helper</h1>
+  <p>
+    Answer a few questions and this tool will explain
+    the <b>trade-offs</b> and suggest the better option.
+  </p>
+
+  <label>Traffic Level</label>
   <select id="traffic">
-    <option>Low</option>
-    <option>High</option>
+    <option value="low">Low</option>
+    <option value="high">High</option>
   </select>
 
-  <br><br>
-
-  <label>Want low server management?</label>
+  <label>Do you want minimal server management?</label>
   <select id="ops">
-    <option>Yes</option>
-    <option>No</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
   </select>
 
-  <br><br>
-
-  <label>Very cost sensitive?</label>
+  <label>Cost sensitivity</label>
   <select id="cost">
-    <option>Yes</option>
-    <option>No</option>
+    <option value="high">High</option>
+    <option value="low">Low</option>
   </select>
 
-  <br><br>
+  <button onclick="decide()">Compare Options</button>
 
-  <button onclick="decide()">Decide</button>
+  <div id="output" class="box"></div>
 
-  <pre id="result"></pre>
+  <script>
+    function decide() {
+      const traffic = document.getElementById("traffic").value;
+      const ops = document.getElementById("ops").value;
+      const cost = document.getElementById("cost").value;
 
-  <script src="script.js"></script>
+      let result = "";
+
+      result += "🔹 AWS Lambda\n";
+      result += "Pros: No servers to manage, automatic scaling, pay per use\n";
+      result += "Cons: Cold starts, execution time limits\n\n";
+
+      result += "🔹 AWS EC2\n";
+      result += "Pros: Full control, predictable performance, no cold starts\n";
+      result += "Cons: Server management, fixed running cost\n\n";
+
+      if (traffic === "low" && ops === "yes" && cost === "high") {
+        result += "✅ Recommendation: AWS Lambda\n\n";
+        result += "Reason:\n";
+        result += "- Low traffic suits pay-per-use pricing\n";
+        result += "- Minimal operational effort required\n";
+        result += "- Trade-off: Accepting cold starts for simplicity";
+      } else {
+        result += "✅ Recommendation: AWS EC2\n\n";
+        result += "Reason:\n";
+        result += "- Better for consistent or high traffic\n";
+        result += "- More control over infrastructure\n";
+        result += "- Trade-off: Higher operational responsibility";
+      }
+
+      document.getElementById("output").innerText = result;
+    }
+  </script>
+
 </body>
 </html>
